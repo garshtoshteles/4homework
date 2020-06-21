@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Quiz</title>
+    <!-- style from bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <!-- potentially get script from jquery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+
+    <!-- script from my own javascript -->
+    <!-- <script src="./script.js"></script> TURNED INACTIVE BC INCLUDED IN HTML -->
+    <!-- GIVEN I am taking a code quiz
+    WHEN I click the start button
+    THEN a timer starts and I am presented with a question
+    WHEN I answer a question
+    THEN I am presented with another question
+    WHEN I answer a question incorrectly
+    THEN time is subtracted from the clock
+    WHEN all questions are answered or the timer reaches 0
+    THEN the game is over
+    WHEN the game is over
+    THEN I can save my initials and score-->
+  </head>
+  <body>
+    <!-- div for the clock -->
+    <div id="clock"><span id="time"></span></div>
+    <!-- div for the question -->
+    <div id="title"></div>
+    <!-- div(s) for the options 
+    buttons for each option (4)-->
+    <div class="options">
+      <button class="possanswer" id="a" value="a"></button>
+      <button class="possanswer" id="b" value="b"></button>
+      <button class="possanswer" id="c" value="c"></button>
+      <button class="possanswer" id="d" value="d"></button>
+    </div>
+    <!-- div for feedback (incorrect, correct) -->
+    <div class="feedback"></div>
+
+    <!--  -->
+    <!-- this marks the beginning of the JS -->
+    <!--  -->
+
+    <script type="text/javascript">
+      function startTimer(duration, display) {
+        var start = Date.now(),
+          diff,
+          minutes,
+          seconds;
+        var errornum = 0;
+        function timer() {
+          // get the number of seconds that have elapsed since
+          // startTimer() was called
+          diff = duration - (((Date.now() - start) / 1000) | 0) - errornum * 5;
+
+          // does the same job as parseInt truncates the float
+          minutes = (diff / 60) | 0;
+          seconds = diff % 60 | 0;
+
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          seconds = seconds < 10 ? "0" + seconds : seconds;
+
+          display.textContent = minutes + ":" + seconds;
+
+          if (diff <= 0) {
+            // add one second so that the count down starts at the full duration
+            // example 05:00 not 04:59
+            start = Date.now() + 1000;
+          }
+        }
+        // we don't want to wait a full second before the timer starts
+        timer();
+        setInterval(timer, 100);
+
+        $(".possanswer").on("click", function () {
+          errornum++;
+        });
+      }
+
+      window.onload = function () {
+        var twoMinutes = 60 * 2,
+          display = document.querySelector("#time");
+        startTimer(twoMinutes, display);
+      };
+      // if wrong answer is provided, remove 10 seconds from the clock
+      // create listeners for button click with some sort of if statement for correct button press
+
+      q1 = {
+        q:
+          "What Number object method is used to return a string with a given number base?",
+        a: "toString(base); //Bases can range from 2 to 36",
+        b: "Math.random() //Returns a value >= 0.0 but <1.0",
+        c: "toTimeString();",
+        d: "document.getElementById('checkboxId').checked;",
+        answer: "a",
+      };
+
+      q2 = {
+        q:
+          "What Math object method is used to return a given number rounded to the next highest integer value?",
+        a: "Math.ceil(number);",
+        b: "Math.min(var1, var2, varN);",
+        c: "toString();",
+        d: "Math.pow(number, power);",
+        answer: "a",
+      };
+
+      q3 = {
+        q: "How do you write text to the current element of the DOM?",
+        a: "document.write('Text Here'); //Remains on current line",
+        b: "document.getElementById('textAreaId').value;",
+        c:
+          "document.getElementById('spanId').firstChild.nodeValue = 'New Value';",
+        d: "document.getElementById('radioButtonId').value;",
+        answer: "a",
+      };
+
+      q4 = {
+        q: "What are the available set methods for a Date object?",
+        a: "focus \nblur",
+        b:
+          "setFullYear()\n setMonth()\n setDate()\nsetHours()\n setMinutes()\n setSeconds()\nsetMilliseconds()",
+        c:
+          "Number.MAX_VALUE \n Number.MIN_VALUE \n Number.POSITIVE_INFINITY \n Number.NEGATIVE_INFINITY \n Number.NaN",
+        d: "onfocus \n onblur \n onclick \n ondblclick \n onchange \n onselect",
+        answer: "b",
+      };
+
+      q5 = {
+        q: "How do you declare a variable in JavaScript?",
+        a: "var dateVar = new Date();",
+        b: "var answerVar = confirm('Message Text Here');",
+        c: "var variableName;",
+        d: "var functionName = function(param1, param2, paramN) {}",
+        answer: "c",
+      };
+
+      q6 = {
+        q: "What is the <noscript> tag used for?",
+        a: "switch (inputVar)",
+        b: "(Condition_Expression) ? Value_If_True : Value_If_False;",
+        c:
+          "The text between the opening and closing tag is displayed if JavaScript is disabled or otherwise not available",
+        d: "focus \nblur",
+        answer: "c",
+      };
+
+      q7 = {
+        q: "What values can confirm() return?",
+        a: "toString();",
+        b: "var variableName;",
+        c: "True or false",
+        d: "toTimeString();",
+        answer: "c",
+      };
+
+      q8 = {
+        q:
+          "What String object method returns a new string containing the value of the original string but in all lower case?",
+        a: "toLowerCase();",
+        b: "toExponential(digits);",
+        c: "charAt(position);",
+        d: "toPrecision(precision);",
+        answer: "a",
+      };
+
+      q9 = {
+        q:
+          "What Number object method is used to return a numerical string with the specified number of significant digits?",
+        a: "toExponential(digits);",
+        b: "toPrecision(precision);",
+        c: "toUpperCase();",
+        d: "toFixed(digits);",
+        answer: "b",
+      };
+
+      q10 = {
+        q: "How do you code an If statement in JavaScript?",
+        a: "var dateVar = new Date();",
+        b: "Using the second parameter. Example: prompt('Enter Age:', '18');",
+        c: "charAt(position);",
+        d: "if (condition) {}",
+        answer: "d",
+      };
+
+      var questions = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
+      // For the quiz questions I made an array of objects.  The Objects contain the question, an array of answers, and the index of the correct answer.
+      // You'll need a function that displays the question and it's array of answers.  You'll then need a function that listens to your click and determines
+      // if what you clicked is the correct answer.  Once you determine if its the correct answer, call the first function again to display the next question
+      // and answers.   You'll probably need a global variable to keep track of which question you are asking.
+      console.log(questions);
+
+      // this line grabs the value of the clicked option
+      $(".possanswer").on("click", function () {
+        var val = $(this).attr("value");
+        function stepthruquestion() {
+          $("#title").text(currentquestion.q);
+        }
+      });
+    </script>
+  </body>
+</html>
