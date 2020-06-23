@@ -37,8 +37,11 @@
     buttons for each option (4)-->
     <div class="options">
       <button class="possanswer" id="a" value="a"></button>
+      <br />
       <button class="possanswer" id="b" value="b"></button>
+      <br />
       <button class="possanswer" id="c" value="c"></button>
+      <br />
       <button class="possanswer" id="d" value="d"></button>
     </div>
     <!-- div for feedback (incorrect, correct) -->
@@ -49,12 +52,15 @@
     <!--  -->
 
     <script type="text/javascript">
+      var errornum = 0;
+      var Qnum = 0;
+
       function startTimer(duration, display) {
         var start = Date.now(),
           diff,
           minutes,
           seconds;
-        var errornum = 0;
+        errornum = 0;
         function timer() {
           // get the number of seconds that have elapsed since
           // startTimer() was called
@@ -78,6 +84,8 @@
         // we don't want to wait a full second before the timer starts
         timer();
         setInterval(timer, 100);
+
+        // will probably have to move this next bt elsewhere, into the function that listens for any poss answer click
 
         $(".possanswer").on("click", function () {
           errornum++;
@@ -197,12 +205,20 @@
       // and answers.   You'll probably need a global variable to keep track of which question you are asking.
       console.log(questions);
 
-      // this line grabs the value of the clicked option
+      // this actually moves it to the next question
+      function stepthruquestion() {
+        $("#title").text(questions[Qnum].q);
+        $("#a").text(questions[Qnum].a);
+        $("#b").text(questions[Qnum].b);
+        $("#c").text(questions[Qnum].c);
+        $("#d").text(questions[Qnum].d);
+        Qnum++;
+      }
+
+      // this line grabs the value (i.e the letter) of the clicked option
       $(".possanswer").on("click", function () {
         var val = $(this).attr("value");
-        function stepthruquestion() {
-          $("#title").text(currentquestion.q);
-        }
+        stepthruquestion();
       });
     </script>
   </body>
